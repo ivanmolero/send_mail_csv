@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="hboxPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.imolero.sendmailcsv.control.vista.PrincipalController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgLogo" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ToggleButton fx:id="btnRenombrado" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#renombrado" text="Renombrado">
+               <toggleGroup>
+                  <ToggleGroup fx:id="principal" />
+               </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="btnEnvio" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#envio" text="Envio" toggleGroup="$principal" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
