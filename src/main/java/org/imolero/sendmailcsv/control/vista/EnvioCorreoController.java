@@ -175,13 +175,15 @@ public class EnvioCorreoController implements Initializable {
         while (it.hasNext()) {
             Row fila = (Row) it.next();
             if (fila.getRowNum() > 0) {
-                tblExcel.getItems().add(
-                        new PosicionDato(
-                                fila.getRowNum(),
-                                fila.getCell((int) columnaClave).getStringCellValue().trim().toUpperCase(),
-                                fila.getCell((int) columnaCorreo).getStringCellValue().trim().toUpperCase()
-                        )
-                );
+                if (fila.getCell((int) columnaClave) != null) {
+                    tblExcel.getItems().add(
+                            new PosicionDato(
+                                    fila.getRowNum(),
+                                    dataFormatter.formatCellValue(fila.getCell((int) columnaClave)).trim().toUpperCase(),
+                                    fila.getCell((int) columnaCorreo).getStringCellValue().trim().toUpperCase()
+                            )
+                    );
+                }
             }
         }
     }
@@ -272,27 +274,34 @@ public class EnvioCorreoController implements Initializable {
         Iterator<List<String>> valores = obtenerValores().iterator();
         Iterator<EnvioCorreo> correos = tblCorreo.getItems().iterator();
         List<EtiquetaCampo> columnas = tblColumnas.getItems();
-        while (valores.hasNext()) {
-            EnvioCorreo correo = correos.next();
-            Iterator<String> valor = valores.next().iterator();
-            String asunto = cmbPlantilla.getValue().getAsunto();
-            String mensaje = cmbPlantilla.getValue().getContenido();
-            for (EtiquetaCampo columna : columnas) {
-                String etiqueta = columna.getEtiqueta();
-                String val = valor.next();
-                asunto = asunto.replaceAll(etiqueta, val);
-                mensaje = mensaje.replaceAll(etiqueta, val);
+        int conteo = 1;
+        while (correos.hasNext()) {
+            try {
+                EnvioCorreo correo = correos.next();
+                Iterator<String> valor = valores.next().iterator();
+                String asunto = cmbPlantilla.getValue().getAsunto();
+                String mensaje = cmbPlantilla.getValue().getContenido();
+                for (EtiquetaCampo columna : columnas) {
+                    String etiqueta = columna.getEtiqueta();
+                    String val = valor.next();
+                    asunto = asunto.replaceAll(etiqueta, val);
+                    mensaje = mensaje.replaceAll(etiqueta, val);
+                }
+                enviarMensajeCorreo(correo, asunto, mensaje);
+                correo.setEstado("ENVIADO");
+                tblCorreo.refresh();
+                System.out.println("enviado " + conteo + "/"+ tblCorreo.getItems().size() );
+                conteo++;
+                TimeUnit.SECONDS.sleep(5);
+            } catch (NoSuchElementException e) {
+                e.printStackTrace();
             }
-            enviarMensajeCorreo(correo, asunto, mensaje);
-            correo.setEstado("ENVIADO");
-            //tblCorreo.refresh();
-            TimeUnit.SECONDS.sleep(5);
         }
     }
 
     private void enviarMensajeCorreo(EnvioCorreo correo, String asunto, String mensaje) {
-        String to = correo.getPosicionDato().getCorreo();
-        String from = txtCorreo.getText();
+        String to = correo.getPosicionDato().getCorreo().toLowerCase();
+        String from = txtCorreo.getText().toLowerCase();
         String username = from;
         String password = txtContrasena.getText();
         String host = "smtp.gmail.com";
@@ -303,6 +312,7 @@ public class EnvioCorreoController implements Initializable {
         propiedades.put("mail.smtp.host", host);
         propiedades.put("mail.smtp.port", "587");
         propiedades.put("mail.smtp.debug", "true");
+        propiedades.put("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
         Session sesion = Session.getInstance(propiedades, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -327,6 +337,7 @@ public class EnvioCorreoController implements Initializable {
             }
             message.setContent(multipart);
             Transport.send(message);
+            System.out.println("correo enviado");
         } catch (AddressException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
@@ -336,6 +347,7 @@ public class EnvioCorreoController implements Initializable {
 
     private List<List<String>> obtenerValores() {
         Sheet hoja = cmbHoja.getValue();
+        DataFormatter formatter = new DataFormatter();
         List<Integer> posiciones = new ArrayList<>();
         for (EtiquetaCampo etiquetaCampo : tblColumnas.getItems()) {
             posiciones.add((int) etiquetaCampo.getPosicion());
@@ -346,11 +358,9 @@ public class EnvioCorreoController implements Initializable {
             Row fila = (Row) it.next();
             if (fila.getRowNum() > 0 && fila != null) {
                 List<String> datos = new ArrayList<>();
-                System.out.println(posiciones);
-                System.out.println(fila.toString());
                 for (int posicion : posiciones) {
                     if (fila.getCell(posicion) != null) {
-                        datos.add(fila.getCell(posicion).getStringCellValue());
+                        datos.add(formatter.formatCellValue(fila.getCell(posicion)));
                     }
                 }
                 valores.add(datos);
