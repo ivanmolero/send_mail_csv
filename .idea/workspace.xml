@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a30720a4-5a16-425d-9634-2692e93185ca" name="Default Changelist" comment="actualización de logo y estilo de la aplicacion" />
+    <list default="true" id="a30720a4-5a16-425d-9634-2692e93185ca" name="Default Changelist" comment="revision de archivos de proyecto">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,17 +74,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.App" />
@@ -110,7 +101,7 @@
       <workItem from="1621283697149" duration="35000" />
       <workItem from="1621369362131" duration="2041000" />
       <workItem from="1621618938446" duration="245000" />
-      <workItem from="1621932356987" duration="384000" />
+      <workItem from="1621932356987" duration="514000" />
     </task>
     <task id="LOCAL-00001" summary="falla en tls">
       <created>1621245128293</created>
@@ -126,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621619011787</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="revision de archivos de proyecto">
+      <created>1621933172710</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1621933172710</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +146,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="falla en tls" />
     <MESSAGE value="actualización de logo y estilo de la aplicacion" />
-    <option name="LAST_COMMIT_MESSAGE" value="actualización de logo y estilo de la aplicacion" />
+    <MESSAGE value="revision de archivos de proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="revision de archivos de proyecto" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
