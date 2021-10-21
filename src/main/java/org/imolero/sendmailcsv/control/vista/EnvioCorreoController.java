@@ -292,7 +292,7 @@ public class EnvioCorreoController implements Initializable {
                 tblCorreo.refresh();
                 System.out.println("enviado " + conteo + "/"+ tblCorreo.getItems().size() );
                 conteo++;
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(2);
             } catch (NoSuchElementException e) {
                 e.printStackTrace();
             }
